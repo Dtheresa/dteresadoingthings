@@ -2,6 +2,7 @@
 *.pyc
 *~
 __pycache__
+0*.py
 
 # Env
 .env

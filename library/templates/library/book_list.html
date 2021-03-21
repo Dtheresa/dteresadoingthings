@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Dteresadoingthings</title>
+        <title>book list</title>
     </head>
     <body>
         <p>Hi there!</p>
         <p>Welcome to my personal library!</p>
+        <p>Here is are the list of books that I have catalogued.</p>
+        {% for book in books %}
+		    <article>
+		        <h2><a href="">{{ book.title }}</a></h2>
+		        <h3>Authored by: {{book.author}}</h3>
+		        <time>published: {{ book.published_date }}</time>
+		        <p>{{ book.summary|linebreaksbr }}</p>
+		    </article>
+{% endfor %}
     </body>
 </html>
