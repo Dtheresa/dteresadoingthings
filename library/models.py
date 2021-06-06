@@ -4,9 +4,9 @@ from django.utils import timezone
 
 
 class Author(models.Model):
-    TITLE_CHOICES = [('MR', 'Mr.'),
-                     ('MRS', 'Mrs.'),
-                     ('MS', 'Ms.'),
+    TITLE_CHOICES = [('MR', 'Mr'),
+                     ('MRS', 'Mrs'),
+                     ('MS', 'Ms'),
                      ('DR', 'Dr'),
                      ('SIR', 'Sir')]
     title = models.CharField(max_length=3, choices=TITLE_CHOICES, blank=True)
@@ -40,19 +40,21 @@ class Language(models.Model):
 
 
 class Book(models.Model):
-    author = models.ManyToManyField(Author)
+    author = models.ForeignKey(Author, null=True, on_delete=models.CASCADE)
+    genre = models.ManyToManyField(Genre, null=True, related_name="genres")
     title = models.CharField(max_length=400)
     summary = models.TextField(
         help_text='Enter a brief description of the book', default="")
+
+    # timestamp model for date time fields
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateField(blank=True, null=True)
     start_date = models.DateField(blank=True, null=True)
     completed_date = models.DateField(blank=True, null=True)
     language = models.ManyToManyField(Language)
-    genre = models.ManyToManyField(Genre)
     page_count = models.IntegerField(default=0)
 
     def __str__(self):
-        # return self.title
-        return '{} - {} {}'.format(
-            self.title, self.author.first_name, self.author.last_name)
+        return self.title
+        # return '{} - {} {}'.format(
+        #     self.title, self.author.first_name, self.author.last_name)
